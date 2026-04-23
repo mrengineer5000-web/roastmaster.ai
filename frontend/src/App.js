@@ -12,6 +12,7 @@ import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import Refund from "@/pages/Refund";
 import Contact from "@/pages/Contact";
+import ForgotPassword from "@/pages/ForgotPassword";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/refund" element={<Refund />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Routes>
           <Toaster theme="dark" position="top-right" />
         </BrowserRouter>

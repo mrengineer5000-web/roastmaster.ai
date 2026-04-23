@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
-import { Flame, ArrowRight } from "lucide-react";
+import { Flame, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Auth({ mode }) {
@@ -14,6 +14,7 @@ export default function Auth({ mode }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -94,17 +95,39 @@ export default function Auth({ mode }) {
                 />
               </div>
               <div>
-                <label className="label-tag">Password</label>
-                <input
-                  data-testid="auth-password-input"
-                  type="password"
-                  required
-                  minLength={6}
-                  className="input-brutal mt-2"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="min 6 characters"
-                />
+                <div className="flex items-center justify-between">
+                  <label className="label-tag">Password</label>
+                  {isLogin && (
+                    <Link
+                      to="/forgot-password"
+                      data-testid="auth-forgot-link"
+                      className="text-[10px] uppercase tracking-[0.2em] text-[#A1A1AA] hover:text-[#FFD60A] transition-colors"
+                    >
+                      Forgot?
+                    </Link>
+                  )}
+                </div>
+                <div className="relative mt-2">
+                  <input
+                    data-testid="auth-password-input"
+                    type={showPassword ? "text" : "password"}
+                    required
+                    minLength={6}
+                    className="input-brutal pr-12"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="min 6 characters"
+                  />
+                  <button
+                    type="button"
+                    data-testid="auth-password-toggle"
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    className="absolute top-1/2 -translate-y-1/2 right-3 p-1.5 text-[#A1A1AA] hover:text-[#FFD60A] transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
 
               <button data-testid="auth-submit-btn" type="submit" disabled={loading} className="btn-brutal w-full">
