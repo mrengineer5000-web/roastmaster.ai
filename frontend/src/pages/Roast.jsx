@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { toPng } from "html-to-image";
 import { api } from "../lib/api";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import RoastCard from "../components/RoastCard";
 import { Download, Share2, ArrowLeft, Flame, Trophy, Copy } from "lucide-react";
 import { toast } from "sonner";
@@ -79,10 +80,10 @@ export default function Roast() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#FAFAFA]">
+    <div className="min-h-screen bg-[#050505] text-[#FAFAFA] flex flex-col">
       <Navbar/>
-      <div className="mx-auto max-w-5xl px-4 md:px-8 py-10">
-        <div className="flex items-center justify-between mb-6">
+      <div className="mx-auto max-w-5xl w-full px-6 md:px-10 py-14 md:py-20 flex-1">
+        <div className="flex items-center justify-between mb-8">
           <Link to="/" data-testid="roast-back-link" className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-[#A1A1AA] hover:text-[#FFD60A]">
             <ArrowLeft className="h-3.5 w-3.5"/> New roast
           </Link>
@@ -93,7 +94,7 @@ export default function Roast() {
           <RoastCard ref={cardRef} roast={roast}/>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-3 justify-center">
+        <div className="mt-8 flex flex-wrap gap-3 justify-center">
           <button data-testid="roast-download-btn" onClick={download} disabled={downloading} className="btn-brutal">
             <Download className="h-5 w-5"/> {downloading ? "Rendering..." : "Download PNG"}
           </button>
@@ -106,12 +107,12 @@ export default function Roast() {
         </div>
 
         {/* Idea text */}
-        <div className="mt-10 border border-[#27272A] p-6">
+        <div className="mt-14 border border-[#27272A] p-8">
           <p className="label-tag">The Idea That Got Roasted</p>
-          <p className="mt-3 text-sm text-[#A1A1AA] whitespace-pre-wrap leading-relaxed">{roast.idea}</p>
+          <p className="mt-4 text-sm text-[#A1A1AA] whitespace-pre-wrap leading-[1.8]">{roast.idea}</p>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-3 justify-center">
+        <div className="mt-10 flex flex-wrap gap-3 justify-center">
           <Link to="/" data-testid="roast-new-link" className="btn-brutal btn-ghost">
             <Flame className="h-5 w-5"/> Roast another idea
           </Link>
@@ -120,6 +121,7 @@ export default function Roast() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

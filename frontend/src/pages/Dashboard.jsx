@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { api } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { Flame, Plus } from "lucide-react";
 
 export default function Dashboard() {
@@ -21,9 +22,10 @@ export default function Dashboard() {
   if (!user) return <Navigate to="/login" replace />;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#FAFAFA]">
+    <div className="min-h-screen bg-[#050505] text-[#FAFAFA] flex flex-col">
       <Navbar/>
-      <div className="mx-auto max-w-6xl px-4 md:px-8 py-12">
+      <main className="flex-1">
+        <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 md:py-20">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <span className="label-tag">Your File</span>
@@ -89,7 +91,9 @@ export default function Dashboard() {
             );
           })}
         </div>
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

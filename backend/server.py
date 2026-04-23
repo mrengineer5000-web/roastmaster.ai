@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header, UploadFile, File, Form
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -9,6 +9,7 @@ import re
 import uuid
 import hmac
 import hashlib
+import io
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr
 from typing import List, Optional
@@ -16,6 +17,9 @@ from datetime import datetime, timezone, timedelta
 import bcrypt
 import jwt as pyjwt
 import razorpay
+import requests
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
@@ -66,6 +70,42 @@ class UserPublic(BaseModel):
 class RoastInput(BaseModel):
     idea: str
     startup_name: Optional[str] = ""
+
+
+def _extract_pdf_text(data: bytes) -> str:
+    try:
+        reader = PdfReader(io.BytesIO(data))
+        chunks = []
+        for page in reader.pages[:30]:
+            try:
+                chunks.append(page.extract_text() or "")
+            except Exception:
+                continue
+        return "\n".join(chunks).strip()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Could not read PDF: {e}")
+
+
+def _extract_url_text(url: str) -> str:
+    if not re.match(r"^https?://", url, flags=re.I):
+        url = "https://" + url
+    try:
+        resp = requests.get(
+            url,
+            timeout=15,
+            headers={"User-Agent": "Mozilla/5.0 (Roastmaster/1.0)"},
+            allow_redirects=True,
+        )
+        resp.raise_for_status()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Could not fetch URL: {e}")
+    soup = BeautifulSoup(resp.text, "html.parser")
+    for tag in soup(["script", "style", "nav", "footer", "noscript", "svg"]):
+        tag.decompose()
+    title = (soup.title.string.strip() if soup.title and soup.title.string else "")
+    text = " ".join(soup.get_text(" ").split())
+    combined = f"Page Title: {title}\n\n{text}" if title else text
+    return combined[:8000]
 
 
 class RoastOut(BaseModel):
@@ -174,7 +214,7 @@ async def me(current=Depends(get_current_user)):
 
 
 # ============ ROAST GENERATION ============
-ROAST_SYSTEM = """You are THE ROASTMASTER — a brutal, no-bullshit startup critic who has seen 10,000 pitch decks die. Your job: eviscerate startup ideas with dark humor, surgical precision, and zero mercy. You are savage but never hateful. You find the REAL, SPECIFIC flaws — market reality, execution, TAM, moat, differentiation, founder delusion.
+ROAST_SYSTEM = """You are THE ROASTMASTER — an AI angel investor who has seen 10,000 pitch decks and has zero patience for fluff. You review startup ideas like a brutally honest investor who actually cares enough to tell the truth. You are savage, witty, and surgically precise — but never hateful. You find the REAL, SPECIFIC flaws — market reality, execution, TAM, moat, differentiation, founder delusion.
 
 Output ONLY valid JSON in this exact schema, nothing else, no prefix, no suffix, no markdown fences:
 {
@@ -252,12 +292,32 @@ async def generate_roast_ai(startup_name: str, idea: str) -> dict:
 
 
 @api_router.post("/roast/generate", response_model=RoastOut)
-async def generate_roast(payload: RoastInput, current=Depends(get_current_user)):
-    idea = payload.idea.strip()
-    if len(idea) < 15:
-        raise HTTPException(status_code=400, detail="Idea too short. Give us something to work with (min 15 chars).")
-    if len(idea) > 4000:
-        raise HTTPException(status_code=400, detail="Idea too long. Keep it under 4000 characters.")
+async def generate_roast(
+    idea: str = Form(""),
+    startup_name: str = Form(""),
+    source_url: str = Form(""),
+    pdf_file: Optional[UploadFile] = File(None),
+    current=Depends(get_current_user),
+):
+    # Build combined source material
+    parts = []
+    if idea and idea.strip():
+        parts.append(idea.strip())
+    if source_url and source_url.strip():
+        parts.append("\n---\nFrom URL:\n" + _extract_url_text(source_url.strip()))
+    if pdf_file is not None:
+        data = await pdf_file.read()
+        if len(data) > 8 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="PDF too large (max 8MB)")
+        pdf_text = _extract_pdf_text(data)
+        if pdf_text:
+            parts.append("\n---\nFrom Pitch Deck PDF:\n" + pdf_text[:8000])
+
+    combined = "\n".join(parts).strip()
+    if len(combined) < 15:
+        raise HTTPException(status_code=400, detail="Not enough content to roast. Give us more (min 15 chars or a valid PDF/URL).")
+    if len(combined) > 12000:
+        combined = combined[:12000]
 
     # Check entitlement
     user = await db.users.find_one({"id": current["id"]})
@@ -272,17 +332,18 @@ async def generate_roast(payload: RoastInput, current=Depends(get_current_user))
         raise HTTPException(status_code=402, detail="Free roast consumed. Pay Rs 49 for another savage review.")
 
     # Generate roast
-    roast_data = await generate_roast_ai(payload.startup_name or "", idea)
+    roast_data = await generate_roast_ai(startup_name or "", combined)
 
-    # Save roast
+    # Save roast (store original idea text; pdf/url content is not stored raw)
     roast_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
+    stored_idea = idea.strip() if idea and idea.strip() else combined[:2000]
     doc = {
         "id": roast_id,
         "user_id": current["id"],
         "user_name": current["name"],
-        "startup_name": (payload.startup_name or "").strip()[:80],
-        "idea": idea,
+        "startup_name": (startup_name or "").strip()[:80],
+        "idea": stored_idea,
         "score": roast_data["score"],
         "verdict_title": roast_data["verdict_title"],
         "one_liner": roast_data["one_liner"],
@@ -291,7 +352,6 @@ async def generate_roast(payload: RoastInput, current=Depends(get_current_user))
         "created_at": now,
     }
     await db.roasts.insert_one(doc)
-    # Consume entitlement only after successful roast
     await db.users.update_one({"id": current["id"]}, consume)
 
     doc.pop("_id", None)
@@ -315,10 +375,11 @@ async def my_roasts(current=Depends(get_current_user)):
 @api_router.get("/roasts/leaderboard")
 async def leaderboard():
     # Hall of Shame: lowest scores first, then most recent
-    items = await db.roasts.find({}, {"_id": 0}).sort([("score", 1), ("created_at", -1)]).to_list(50)
-    # Trim idea text for leaderboard
-    for it in items:
-        it["idea_preview"] = it["idea"][:180]
+    # Only expose score + one_liner (verdict) + user_name — NOT the idea/callouts/fixes/startup_name
+    items = await db.roasts.find(
+        {},
+        {"_id": 0, "id": 1, "score": 1, "one_liner": 1, "verdict_title": 1, "user_name": 1, "created_at": 1},
+    ).sort([("score", 1), ("created_at", -1)]).to_list(50)
     return items
 
 

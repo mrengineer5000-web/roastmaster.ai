@@ -8,6 +8,10 @@ import Auth from "@/pages/Auth";
 import Roast from "@/pages/Roast";
 import Leaderboard from "@/pages/Leaderboard";
 import Dashboard from "@/pages/Dashboard";
+import Terms from "@/pages/Terms";
+import Privacy from "@/pages/Privacy";
+import Refund from "@/pages/Refund";
+import Contact from "@/pages/Contact";
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
             <Route path="/roast/:id" element={<Roast />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
           <Toaster theme="dark" position="top-right" />
         </BrowserRouter>
