@@ -1,0 +1,92 @@
+{
+  "theme": "dark",
+  "archetype": "Archetype 4 (Swiss & High-Contrast - Brutalist/Tabloid Variation)",
+  "design_philosophy": "Brutal & savage roast tone. Dark editorial/tabloid-magazine layout. Anti-design, neo-brutalist, high-contrast, designed to shock and be screenshot-worthy. A mix of underground comedy club and aggressive startup reality check.",
+  "colors": {
+    "background": {
+      "primary": "#050505",
+      "secondary": "#121212",
+      "tertiary": "#1A1A1A"
+    },
+    "text": {
+      "primary": "#FAFAFA",
+      "secondary": "#A1A1AA",
+      "muted": "#71717A"
+    },
+    "brand": {
+      "primary": "#FF3B30",
+      "secondary": "#FFD60A",
+      "tertiary": "#FF6B22"
+    },
+    "ui": {
+      "border": "#27272A",
+      "error": "#FF3B30",
+      "success": "#32D74B",
+      "warning": "#FFD60A"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "primary_heading": "Anton",
+      "secondary_heading": "Playfair Display",
+      "body": "JetBrains Mono"
+    },
+    "rules": {
+      "h1": "text-5xl sm:text-6xl+ uppercase tracking-tighter leading-none",
+      "h2": "text-4xl sm:text-5xl uppercase tracking-tight",
+      "h3": "text-2xl sm:text-3xl font-serif italic",
+      "body": "text-sm sm:text-base font-mono leading-relaxed",
+      "labels": "text-xs font-mono uppercase tracking-[0.2em] text-[#FFD60A]"
+    }
+  },
+  "spacing_and_layout": {
+    "philosophy": "Grid Borders (The 'Technical' Look). Strict structural hierarchy masquerading as chaos. High tension asymmetry.",
+    "container_padding": "p-6 md:p-12",
+    "grid_system": "Use Tailwind CSS grid with `gap-px` on a border-colored wrapper, and background colors on children to create 1px rigid grid lines. Emulate a 'Control Room' or classified ads spread.",
+    "borders": "Always use sharp 1px borders (`border-[#27272A]`). `border-collapse` style layout. NEVER use rounded corners above `rounded-sm`."
+  },
+  "components": {
+    "buttons": "Sharp edges (no border-radius). Solid bright primary (Red/Yellow) with black text. On hover: invert colors or solid black with primary border. Always include `data-testid`.",
+    "cards": "Flat background, 1px solid border (`border-border`), no shadow. High contrast.",
+    "inputs_textarea": "Massive, terminal-like text areas. 1px border. Focus state: `focus:ring-2 focus:ring-[#FF3B30] focus:outline-none`. No rounded corners. Background should be #050505.",
+    "roast_card_export": "HTML-to-Image component. Must use the `texture_roast_card` background image overlaid at 20% opacity. Bold red score, monolithic typography, structured like a gritty report card, zine cutout, or classified ad.",
+    "leaderboard": "Tabular, tightly packed rows. Rank numbers in massive font size."
+  },
+  "motion_and_interactions": {
+    "hover_states": "Harsh, instant or snap transitions. Text color must invert sharply. No soft fades.",
+    "page_transitions": "Minimal. Use a flashbulb effect (quick white flash) when submitting an idea to roast to simulate a camera capturing a mugshot.",
+    "marquees": "Use a kinetic texture marquee (`react-fast-marquee`) in the background with massive outline text (e.g., 'REALITY CHECK', 'DELUSION DETECTED') running at an angle or horizontally."
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "hero_background",
+        "url": "https://images.unsplash.com/photo-1466120211630-4aa61f624f34?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwxfHxmaXJlJTIwbWF0Y2glMjBkYXJrfGVufDB8fHx8MTc3Njk1NjcxOXww&ixlib=rb-4.1.0&q=85",
+        "description": "Lighted match stick in the dark. Represents sparking an idea or burning it down. Overlay heavily with black."
+      },
+      {
+        "category": "texture_roast_card",
+        "url": "https://images.unsplash.com/photo-1670056763246-d2782ba17fe0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxjcnVtcGxlZCUyMHBhcGVyJTIwZGFya3xlbnwwfHx8fDE3NzY5NTY3MTl8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Dark crumpled cloth/paper texture. Overlay this on the shareable roast card with `mix-blend-multiply` or `opacity-20` for a gritty tactile feel."
+      },
+      {
+        "category": "comedy_neon_accent",
+        "url": "https://images.pexels.com/photos/35135867/pexels-photo-35135867.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Red neon sign glowing in the night. Good for authentication or paywall background imagery."
+      }
+    ],
+    "icons": {
+      "library": "lucide-react",
+      "usage": "Use sharp, unrounded icons. Keep them minimal, scaling them up for graphic impact."
+    }
+  },
+  "specific_page_instructions": {
+    "landing_page": "Massive H1 (e.g., 'YOUR STARTUP IDEA IS TRASH. LET US PROVE IT.'). Below it, a huge text area. No soft gradients. The hero should feel confrontational. Use the `comedy_neon_accent` image subtly in the background.",
+    "roast_output": "The focal point is the 'Roast Card' div (which will be converted to an image). It needs a brutal layout: A giant 1-10 score in Red, followed by 5 numbered bullet points. The layout should look like an invoice from hell or a tabloid cover.",
+    "paywall_modal": "Razorpay checkout modal should interrupt abruptly. 'ROAST #1 WAS FREE. PAY ₹49 FOR THE NEXT DOSE OF REALITY.' Use Warning Yellow (`#FFD60A`) as the primary button color here.",
+    "leaderboard": "The 'Hall of Shame'. Minimalist table. 1px borders between rows. The scores should be blood red. Massive rank numbers."
+  },
+  "testing": {
+    "attributes": "All interactive elements, forms, cards, and buttons MUST include a `data-testid` attribute (e.g., `data-testid='submit-roast-button'`, `data-testid='roast-card-export'`)."
+  }
+}
