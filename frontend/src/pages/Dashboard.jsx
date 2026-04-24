@@ -4,12 +4,14 @@ import { api } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Flame, Plus } from "lucide-react";
+import { Flame, Plus, Zap } from "lucide-react";
+import PaywallModal from "../components/PaywallModal";
 
 export default function Dashboard() {
   const { user, loading: authLoading } = useAuth();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [paywallOpen, setPaywallOpen] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -24,6 +26,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-[#050505] text-[#FAFAFA] flex flex-col">
       <Navbar/>
+      <PaywallModal open={paywallOpen} onClose={() => setPaywallOpen(false)} />
       <main className="flex-1">
         <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 md:py-20">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -46,6 +49,12 @@ export default function Dashboard() {
             <div className="bg-[#0A0A0A] px-5 py-3">
               <p className="label-tag">Credits</p>
               <p className="font-display text-3xl mt-1 text-[#32D74B]">{user.paid_roasts_balance}</p>
+              <button
+                onClick={() => setPaywallOpen(true)}
+                className="mt-2 text-[10px] uppercase tracking-widest text-[#32D74B] hover:text-[#FAFAFA] flex items-center gap-1"
+              >
+                <Zap className="h-3 w-3" /> Buy More
+              </button>
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ export default function PaywallModal({ open, onClose, onSuccess }) {
     try {
       const ok = await loadRazorpay();
       if (!ok) { toast.error("Failed to load Razorpay"); setLoading(false); return; }
-      const { data } = await api.post("/payment/create-order");
+      const { data } = await api.post("/create-order");
       const options = {
         key: data.key_id,
         amount: data.amount,
@@ -27,7 +27,7 @@ export default function PaywallModal({ open, onClose, onSuccess }) {
         theme: { color: "#FF3B30" },
         handler: async (resp) => {
           try {
-            await api.post("/payment/verify", {
+            await api.post("/verify-payment", {
               razorpay_order_id: resp.razorpay_order_id,
               razorpay_payment_id: resp.razorpay_payment_id,
               razorpay_signature: resp.razorpay_signature,

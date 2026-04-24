@@ -722,7 +722,7 @@ async def leaderboard():
     ]
 
 
-@api_router.post("/payment/create-order", response_model=CreateOrderOut)
+@api_router.post("/create-order", response_model=CreateOrderOut)
 async def create_order(current=Depends(get_current_user)):
     short_id = current["id"][:8]
     receipt = f"roast_{short_id}_{int(datetime.now(timezone.utc).timestamp())}"[:40]
@@ -751,11 +751,15 @@ async def create_order(current=Depends(get_current_user)):
     return {"order_id": order["id"], "amount": ROAST_PRICE_PAISE, "currency": "INR", "key_id": RAZORPAY_KEY_ID}
 
 
-@api_router.post("/payment/verify")
+@api_router.post("/verify-payment")
 async def verify_payment(payload: VerifyPaymentInput, current=Depends(get_current_user)):
-    body = f"{payload.razorpay_order_id}|{payload.razorpay_payment_id}"
-    expected = hmac.new(RAZORPAY_KEY_SECRET.encode("utf-8"), body.encode("utf-8"), hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(expected, payload.razorpay_signature):
+    try:
+        rzp_client.utility.verify_payment_signature({
+            "razorpay_order_id": payload.razorpay_order_id,
+            "razorpay_payment_id": payload.razorpay_payment_id,
+            "razorpay_signature": payload.razorpay_signature,
+        })
+    except Exception:
         with get_db() as conn:
             with conn.cursor() as cur:
                 cur.execute(
