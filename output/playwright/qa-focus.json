@@ -1,0 +1,665 @@
+{
+  "email": "codex.focus.1777006654673@example.com",
+  "results": [
+    {
+      "step": "signup and first roast",
+      "ok": true
+    },
+    {
+      "step": "paywall pay button opens razorpay",
+      "ok": true
+    },
+    {
+      "step": "logout login forgot password",
+      "ok": true
+    }
+  ],
+  "responses": [
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/auth/register",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/generate",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/0a38824a-ed15-4fa2-80e1-2838cf00299c",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/generate",
+      "status": 402
+    },
+    {
+      "url": "https://checkout.razorpay.com/v1/checkout.js",
+      "status": 200
+    },
+    {
+      "url": "https://api.razorpay.com/v1/checkout/public?traffic_env=canary&build=9f6ce7c931d26383c8e774207fcf2e9ffc0f1968&build_v1=7ae2bf3201f49a50df87a0f84ead68058d5a97ac&checkout_v2=1&new_session=1&unified_session_id=ShCqa81wLABlQ7",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/static/cx/razorpay-risk-detection/bundle.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/9f6ce7c931d26383c8e774207fcf2e9ffc0f1968/v2-entry.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2.170c6cce.32143.css",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-posthog-5e21ecbd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-loader-eebe73ca.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c4355fa1.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-4ae638e8.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c4908e31.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-app-4c44f017.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://lumberjack.razorpay.com/v1/track",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-a49c05c2.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-22ca8b00.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c5ac2193.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-8f228520.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-535df930.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-aa1a86ff.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-0c5ad45c.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-b06109b6.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-bd133048.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-7b75c9a0.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-15fac4af.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-0e08afce.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-a7b45975.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-card-624876d6.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-f3840105.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-0cc6cf93.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-1dcc22cb.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-df81238d.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-method-button-467074bd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-2ec250f3.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-emi-block-51c47fa1.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-dd14c6dd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-upi-block-084e80f0.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-upi-qr-ce814fcd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-netbanking-block-e1f2027e.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-otp-aa175acb.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-nach-block-22478978.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-wallet-block-4d9a1953.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-b3555a7e.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-paylater-block-b0750208.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-card-block-5d08a713.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-checkout-payment-7f9c31b7.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-67659fcf.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-analytics-e9b71501.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-button-f5de3127.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-standard-icon-common-339ee233.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-icon-common-277ccc7f.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-icon-common0-17d40644.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-illustration-18cbb988.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-lang-en-cae9af7d.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-customer-a7dcf3f7.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-shield-05b86d80.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-home-558a2216.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-merchant-identity-e7cddd45.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-upi-4a2dbab4.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-overview-d72b7f90.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-card-624876d6.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-checkout-payment-7f9c31b7.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-festivity-flow-487cd8aa.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-google-pay-store-21b64dcc.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-experiment-eligibility-16cbb028.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-flow-f42a6c4b.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-load-partner-sdks-53a257c3.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-gpay-in-a-box-62b6102e.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-getAppleExperimentEligibilityData-9f4318e4.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-in-app-90a0cc68.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-intl-bank-transfer-currency-d0ce3d69.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-fiduciary-consent-4cbad016.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-sentry-542051dd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-lottie-player-e75f21ba.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/payment/create-order",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/assets/fonts/Inter-Regular.e144b7b6.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://lumberjack.razorpay.com/v1/track?key_id=rzp_test_SgrF0X45w9a9zM",
+      "status": 200
+    },
+    {
+      "url": "https://api.razorpay.com/v2/standard_checkout/preferences?key_id=rzp_test_SgrF0X45w9a9zM&session_token=20546BFB096850F6A94FFC54566F6B344A54550CC9D433E655C12E4AA164DA5F8E660D867E1DEC3A84060FF0211D2AC583B654440E8512F6B6806465E4A7D77C1EF22624577A3D234822E082C0E551CB58BADFC1273D531AADA9B54090DAE652F824686224C4C8AB",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-f3840105.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-df81238d.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-0cc6cf93.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-a7b45975.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-1dcc22cb.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-8b201f74.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-2a4fcf8d.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-deeplink-intent-analytics-faccf5a5.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-a49c05c2.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c5ac2193.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-535df930.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-22ca8b00.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-7b75c9a0.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-67659fcf.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-2ec250f3.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-8f228520.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/assets/fonts/Inter-SemiBold.a0fac14b.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-ea7e5d31.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-d39b4b8f.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-7e58248a.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-66f76e3c.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-332e5630.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-beda9d97.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c79dc078.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-11a2b457.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-f53581f1.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-d49e18e5.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-intelligent-offers-ranking-86fa6bc9.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-155c50b3.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-quick-buy-mobile-home-c5ecfb08.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-a4d2fffd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-sidebar-illustration-3ad264f7.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-550923dc.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/assets/fonts/Tasa.bfc68e8b.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-07e284bd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-879e4e99.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-b316c5e1.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-59aaaefd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/festivities/configs.json",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/assets/fonts/Inter-Medium.279dd673.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/app/googlepay.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/app/phonepe.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/app/popclubapp.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/app/paytm.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/card-networks/visa.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/card-networks/mastercard.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/card-networks/rupay.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/card-networks/maestro.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/cardless_emi-sq/snapmint.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/bank/BARB_R.gif",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/bank/CNRB.gif",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/bank/PUNB_R.gif",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/bank/UTBI.gif",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/wallet-sq/mobikwik.png",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/wallet-sq/airtelmoney.png",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/wallet-sq/olamoney.png",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/wallet-sq/payzapp.png",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/paylater-sq/icic.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/paylater-sq/lazypay.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/paylater-sq/epaylater.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/paylater-sq/kkbk.svg",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-b3555a7e.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-dd14c6dd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c3119243.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-inline-offer-container-ebd3253c.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-initialize-pay-with-partner-eb5a6df3.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-BuyerProtectWrapper-2b412d3f.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-sidebar-illustration0-5d9a037c.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-bea7bc04.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-qrcode-03e9cdce.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-f4f021a3.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-sidebar-illustration1-952bf490.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-asset-common-6eccbd17.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://unpkg.com/@razorpay/i18nify-js/lib/assets/flags/in.svg",
+      "status": 302
+    },
+    {
+      "url": "https://api.razorpay.com/v1/standard_checkout/checkout/preferred_methods?key_id=rzp_test_SgrF0X45w9a9zM&session_token=20546BFB096850F6A94FFC54566F6B344A54550CC9D433E655C12E4AA164DA5F8E660D867E1DEC3A84060FF0211D2AC583B654440E8512F6B6806465E4A7D77C1EF22624577A3D234822E082C0E551CB58BADFC1273D531AADA9B54090DAE652F824686224C4C8AB&contact=&amount=4900&country_code=in&device_platform=browser&device_type=desktop&p13n_filter=control&order_id=order_ShCqfLsBc4glRF",
+      "status": 200
+    },
+    {
+      "url": "https://o515678.ingest.sentry.io/api/4507106068135936/envelope/?sentry_key=a7126d6b447b936097b47e179cb9749e&sentry_version=7&sentry_client=sentry.javascript.browser%2F7.64.0",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/auth/login",
+      "status": 200
+    },
+    {
+      "url": "https://unpkg.com/@razorpay/i18nify-js@1.12.8/lib/assets/flags/in.svg",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/app/cred_circle.png",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/app/amazonpay.svg",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/assets/images/phonepe.e101f376.svg",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "finalUrl": "https://roastmaster-ai-tau.vercel.app/"
+}

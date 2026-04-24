@@ -1,0 +1,367 @@
+{
+  "email": "codex.1777006527921@example.com",
+  "results": [
+    {
+      "step": "open landing",
+      "ok": true
+    },
+    {
+      "step": "landing nav buttons",
+      "ok": true
+    },
+    {
+      "step": "signup flow",
+      "ok": true
+    },
+    {
+      "step": "footer legal links",
+      "ok": true
+    },
+    {
+      "step": "dashboard and empty state",
+      "ok": true
+    },
+    {
+      "step": "landing tabs and file picker/remove",
+      "ok": true
+    },
+    {
+      "step": "generate first roast",
+      "ok": true
+    },
+    {
+      "step": "roast action buttons",
+      "ok": true
+    },
+    {
+      "step": "leaderboard and dashboard after roast",
+      "ok": true
+    },
+    {
+      "step": "paywall modal buttons",
+      "ok": false,
+      "error": "pay button did not create order"
+    }
+  ],
+  "errors": [
+    "console:error: Error inlining remote css file SecurityError: Failed to read the 'cssRules' property from 'CSSStyleSheet': Cannot access rules\n    at https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:358209\n    at Array.forEach (<anonymous>)\n    at https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:358170\n    at Lo (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:359058)\n    at Do (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:359274)\n    at https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:359903\n    at Mo (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:360065)\n    at async Io (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:360456)\n    at async https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:366811\n    at async onClick (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:366716)",
+    "console:error: Error while reading CSS rules from https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap SecurityError: Failed to read the 'cssRules' property from 'CSSStyleSheet': Cannot access rules\n    at https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:358938\n    at Array.forEach (<anonymous>)\n    at https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:358899\n    at async Lo (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:358119)\n    at async Do (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:359268)\n    at async https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:359897\n    at async Mo (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:359810)\n    at async Io (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:360456)\n    at async https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:366811\n    at async onClick (https://roastmaster-ai-tau.vercel.app/static/js/main.b5d415e9.js:2:366716)",
+    "console:error: Failed to load resource: the server responded with a status of 402 ()",
+    "console:error: Failed to load resource: the server responded with a status of 402 ()"
+  ],
+  "responses": [
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roasts/leaderboard",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/auth/register",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roasts/my",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/generate",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/536a632f-3974-4f54-a11c-785e5553fae6",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roasts/leaderboard",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roasts/my",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/536a632f-3974-4f54-a11c-785e5553fae6",
+      "status": 200
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/generate",
+      "status": 402
+    },
+    {
+      "url": "https://roastmaster-ai-tau.vercel.app/api/roast/generate",
+      "status": 402
+    },
+    {
+      "url": "https://checkout.razorpay.com/v1/checkout.js",
+      "status": 200
+    },
+    {
+      "url": "https://api.razorpay.com/v1/checkout/public?traffic_env=baseline&build=b32c84c95da946d73b1d45d31661ca7f40ffb8ee&build_v1=7ae2bf3201f49a50df87a0f84ead68058d5a97ac&checkout_v2=1&new_session=1&unified_session_id=ShCp1dT47MBseQ",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.razorpay.com/static/cx/razorpay-risk-detection/bundle.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/b32c84c95da946d73b1d45d31661ca7f40ffb8ee/v2-entry.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2.170c6cce.32143.css",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-posthog-f03598cf.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-loader-030fba7c.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-3986bbd8.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-be8cdf89.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-918ad83f.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://lumberjack.razorpay.com/v1/track",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-app-00762d33.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-b44052ca.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-f8b59ca7.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-4ae696bd.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-4ac2689d.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-95b12230.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-3d45b845.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c431adc9.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-32e2fc0d.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-641775fb.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-cd628075.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-ab4cc866.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-ea45ddfc.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-card-4b13cd74.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-be83828a.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-c70e816a.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-49ac3277.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-3f1e1c76.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-27a7a498.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-7c6518af.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-card-block-047f89a1.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-4febc708.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-checkout-payment-3e4c7194.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-a0c9c377.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-041bf316.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-button-eadb8b04.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-upi-qr-b8e66c56.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-emi-block-82ab05d4.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-method-button-a752c813.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-upi-block-d6a2174c.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-netbanking-block-6ed2d506.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-paylater-block-7a699731.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-otp-1ae8a1d2.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-wallet-block-52460a2b.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-nach-block-a4787c40.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-icon-common-73db1018.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-analytics-a60a0f14.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-icon-common0-17d40644.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-v2-standard-icon-common-339ee233.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-illustration-18cbb988.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-lang-en-b88cfaf0.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-shield-573c0187.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-customer-678aa8ce.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-merchant-identity-96e6e142.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-overview-b6a5a44f.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-home-14f71e58.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-upi-4cf49eb4.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-card-4b13cd74.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-checkout-payment-3e4c7194.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-experiment-eligibility-b705b5ce.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-festivity-flow-c945d667.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-google-pay-store-ea3e70f4.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-apple-pay-flow-cef17b16.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-load-partner-sdks-84a92796.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-gpay-in-a-box-693e5196.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-getAppleExperimentEligibilityData-09723836.modern.js",
+      "status": 200
+    },
+    {
+      "url": "https://checkout-static-next.razorpay.com/build/chunks/v2-entry-in-app-ff8ffd8f.modern.js",
+      "status": 200
+    }
+  ],
+  "finalUrl": "https://roastmaster-ai-tau.vercel.app/"
+}
