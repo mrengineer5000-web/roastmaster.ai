@@ -5,7 +5,7 @@ import { api } from "../lib/api";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import RoastCard from "../components/RoastCard";
-import { Download, Share2, ArrowLeft, Flame, Trophy, Copy, Lock, Zap, Globe, MapPin, Users } from "lucide-react";
+import { Download, Share2, ArrowLeft, Flame, Trophy, Copy, Lock, Zap, Globe, MapPin, Users, Target, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 import { loadRazorpay } from "../lib/api";
@@ -173,6 +173,34 @@ export default function Roast() {
           </div>
 
           <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${roast.is_premium ? "premium-glow" : ""}`}>
+            {/* Market Size */}
+            <div className="border border-[#27272A] bg-[#050505] p-6 relative overflow-hidden group">
+              <p className="label-tag mb-4 flex items-center gap-2"><Globe className="h-3 w-3" /> Market Size</p>
+              <div className={roast.is_premium ? "" : "blur-md select-none opacity-40"}>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-[#A1A1AA]">TAM (Total)</p>
+                    <p className="text-2xl font-display text-[#FFD60A]">{roast.is_premium ? roast.tam_value : "$10B+"}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 border-t border-[#27272A] pt-4">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-[#A1A1AA]">SAM</p>
+                      <p className="text-lg font-display text-white">{roast.is_premium ? roast.sam_value : "$500M"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-[#A1A1AA]">SOM</p>
+                      <p className="text-lg font-display text-white">{roast.is_premium ? roast.som_value : "$50M"}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {!roast.is_premium && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Lock className="h-5 w-5 text-[#71717A] group-hover:text-[#FFD60A] transition-colors" />
+                </div>
+              )}
+            </div>
+
             {/* Competitors */}
             <div className="border border-[#27272A] bg-[#050505] p-6 relative overflow-hidden group">
               <p className="label-tag mb-4 flex items-center gap-2"><Users className="h-3 w-3" /> Market Rivals</p>
@@ -192,24 +220,9 @@ export default function Roast() {
               )}
             </div>
 
-            {/* TAM Analysis */}
-            <div className="border border-[#27272A] bg-[#050505] p-6 relative overflow-hidden group">
-              <p className="label-tag mb-4 flex items-center gap-2"><Globe className="h-3 w-3" /> TAM Reality Check</p>
-              <div className={roast.is_premium ? "" : "blur-md select-none opacity-40"}>
-                <p className="text-sm leading-relaxed font-serif-italic text-lg">
-                  {roast.is_premium ? roast.tam_analysis : "This market is actually a lot smaller than you think it is, mostly because nobody actually wants to pay for this specific solution in this current economy."}
-                </p>
-              </div>
-              {!roast.is_premium && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Lock className="h-5 w-5 text-[#71717A] group-hover:text-[#FFD60A] transition-colors" />
-                </div>
-              )}
-            </div>
-
             {/* Ratings */}
             <div className="border border-[#27272A] bg-[#050505] p-6 relative overflow-hidden group">
-              <p className="label-tag mb-4 flex items-center gap-2"><MapPin className="h-3 w-3" /> Survival Prob</p>
+              <p className="label-tag mb-4 flex items-center gap-2"><TrendingUp className="h-3 w-3" /> Survival Prob</p>
               <div className={roast.is_premium ? "" : "blur-md select-none opacity-40"}>
                 <div className="space-y-6">
                   <div>
@@ -237,6 +250,44 @@ export default function Roast() {
                     </div>
                   </div>
                 </div>
+              </div>
+              {!roast.is_premium && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Lock className="h-5 w-5 text-[#71717A] group-hover:text-[#FFD60A] transition-colors" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Second Row for GTM and Reality Check */}
+          <div className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${roast.is_premium ? "premium-glow" : ""}`}>
+            {/* GTM Strategy */}
+            <div className="border border-[#27272A] bg-[#050505] p-6 relative overflow-hidden group">
+              <p className="label-tag mb-4 flex items-center gap-2"><Target className="h-3 w-3" /> Go-To-Market Strategy</p>
+              <div className={roast.is_premium ? "" : "blur-md select-none opacity-40"}>
+                <ul className="space-y-3">
+                  {(roast.is_premium ? roast.gtm_strategy : ["Step 1", "Step 2", "Step 3", "Step 4"]).map((step, i) => (
+                    <li key={i} className="text-sm leading-relaxed flex gap-3">
+                      <span className="text-[#32D74B] font-mono shrink-0">→</span>
+                      <span className="text-[#D1D1D6]">{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {!roast.is_premium && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Lock className="h-5 w-5 text-[#71717A] group-hover:text-[#FFD60A] transition-colors" />
+                </div>
+              )}
+            </div>
+
+            {/* TAM Reality Check */}
+            <div className="border border-[#27272A] bg-[#050505] p-6 relative overflow-hidden group">
+              <p className="label-tag mb-4 flex items-center gap-2"><Flame className="h-3 w-3" /> Market Reality Check</p>
+              <div className={roast.is_premium ? "" : "blur-md select-none opacity-40"}>
+                <p className="text-lg leading-relaxed font-serif-italic text-[#A1A1AA]">
+                  {roast.is_premium ? roast.tam_analysis : "This market is actually a lot smaller than you think it is, mostly because nobody actually wants to pay for this specific solution."}
+                </p>
               </div>
               {!roast.is_premium && (
                 <div className="absolute inset-0 flex items-center justify-center">

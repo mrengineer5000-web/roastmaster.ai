@@ -80,6 +80,10 @@ CREATE TABLE IF NOT EXISTS roasts (
     is_premium BOOLEAN NOT NULL DEFAULT FALSE,
     competitors JSONB,
     tam_analysis TEXT,
+    tam_value TEXT,
+    sam_value TEXT,
+    som_value TEXT,
+    gtm_strategy JSONB,
     india_rating INTEGER,
     global_rating INTEGER,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -210,6 +214,10 @@ def _row_to_roast(row: dict) -> dict:
         "is_premium": is_premium,
         "competitors": list(row["competitors"] or []) if is_premium else None,
         "tam_analysis": row["tam_analysis"] if is_premium else None,
+        "tam_value": row.get("tam_value") if is_premium else None,
+        "sam_value": row.get("sam_value") if is_premium else None,
+        "som_value": row.get("som_value") if is_premium else None,
+        "gtm_strategy": list(row["gtm_strategy"] or []) if is_premium and row.get("gtm_strategy") else None,
         "india_rating": int(row["india_rating"]) if is_premium and row.get("india_rating") is not None else None,
         "global_rating": int(row["global_rating"]) if is_premium and row.get("global_rating") is not None else None,
     }
@@ -225,6 +233,10 @@ async def _backfill_premium_data(roast_id: str, startup_name: str, idea: str):
                     UPDATE roasts
                     SET competitors = %s::jsonb,
                         tam_analysis = %s,
+                        tam_value = %s,
+                        sam_value = %s,
+                        som_value = %s,
+                        gtm_strategy = %s::jsonb,
                         india_rating = %s,
                         global_rating = %s
                     WHERE id = %s
@@ -232,6 +244,10 @@ async def _backfill_premium_data(roast_id: str, startup_name: str, idea: str):
                     (
                         json.dumps(roast_data["competitors"]),
                         roast_data["tam_analysis"],
+                        roast_data["tam_value"],
+                        roast_data["sam_value"],
+                        roast_data["som_value"],
+                        json.dumps(roast_data["gtm_strategy"]),
                         roast_data["india_rating"],
                         roast_data["global_rating"],
                         roast_id,
@@ -285,6 +301,10 @@ class RoastOut(BaseModel):
     is_premium: bool = False
     competitors: Optional[List[str]] = None
     tam_analysis: Optional[str] = None
+    tam_value: Optional[str] = None
+    sam_value: Optional[str] = None
+    som_value: Optional[str] = None
+    gtm_strategy: Optional[List[str]] = None
     india_rating: Optional[int] = None
     global_rating: Optional[int] = None
 
@@ -501,32 +521,25 @@ ROAST_SYSTEM = """You are THE ROASTMASTER — an AI angel investor who has seen 
 
 Output ONLY valid JSON in this exact schema, nothing else, no prefix, no suffix, no markdown fences:
 {
-  "score": <integer 1-10, where 1 = absolute trash and 10 = unicorn>,
-  "verdict_title": "<a single brutal headline verdict, max 8 words, all caps>",
-  "one_liner": "<one biting sentence summing up why this idea is cooked (max 25 words)>",
-  "callouts": [
-    "<brutal specific callout 1 — reference actual details from their idea>",
-    "<callout 2>",
-    "<callout 3>",
-    "<callout 4>",
-    "<callout 5>"
-  ],
-  "fixes": [
-    "<sharp actionable fix 1>",
-    "<fix 2>",
-    "<fix 3>",
-    "<fix 4>",
-    "<fix 5>"
-  ],
-  "competitors": [
-    "<name of real competitor 1>",
-    "<name of real competitor 2>",
-    "<name of real competitor 3>"
-  ],
-  "tam_analysis": "<1-2 sentences brutally explaining why their market size is either a lie or impossible to capture>",
-  "india_rating": <integer 0-100, probability of survival in the Indian market>,
-  "global_rating": <integer 0-100, probability of global scaling success>
+  "score": <integer 1-10>,
+  "verdict_title": "<brutal headline, max 8 words>",
+  "one_liner": "<one biting sentence>",
+  "callouts": ["<callout 1>", "<callout 2>", "<callout 3>", "<callout 4>", "<callout 5>"],
+  "fixes": ["<fix 1>", "<fix 2>", "<fix 3>", "<fix 4>", "<fix 5>"],
+  "competitors": ["<rival 1>", "<rival 2>", "<rival 3>"],
+  "tam_value": "<Total Addressable Market, e.g. $10B>",
+  "sam_value": "<Serviceable Addressable Market, e.g. $500M>",
+  "som_value": "<Serviceable Obtainable Market, e.g. $50M>",
+  "tam_analysis": "<Brutal 1-sentence reality check on why these numbers are likely delusional or impossible>",
+  "gtm_strategy": ["<brutal practical step 1>", "<step 2>", "<step 3>", "<step 4>"],
+  "india_rating": <0-100>,
+  "global_rating": <0-100>
 }
+
+Rules:
+- TAM/SAM/SOM values MUST be formatted as currency (e.g. $10B, $500M, ₹1000Cr). Be realistic.
+- gtm_strategy should be a list of 4 extremely specific, non-obvious, brutally practical steps to get the first 1000 users. No "use social media" or "do SEO". Tell them EXACTLY who to cold call or where to scrape data.
+- tam_analysis should be a biting critique of the market size or their ability to capture it.
 
 Rules:
 - Callouts must be SPECIFIC to their idea, not generic advice.
@@ -591,6 +604,10 @@ async def generate_roast_ai(startup_name: str, idea: str, file_attachments: Opti
         "fixes": fixes,
         "competitors": [str(c).strip() for c in (data.get("competitors") or [])][:3],
         "tam_analysis": str(data.get("tam_analysis", "")).strip(),
+        "tam_value": str(data.get("tam_value", "N/A")).strip(),
+        "sam_value": str(data.get("sam_value", "N/A")).strip(),
+        "som_value": str(data.get("som_value", "N/A")).strip(),
+        "gtm_strategy": [str(s).strip() for s in (data.get("gtm_strategy") or [])][:4],
         "india_rating": max(0, min(100, safe_int(data.get("india_rating"), 0))),
         "global_rating": max(0, min(100, safe_int(data.get("global_rating"), 0))),
     }
@@ -751,9 +768,10 @@ async def generate_roast(request: Request, current=Depends(get_current_user)):
                 INSERT INTO roasts (
                     id, user_id, user_name, startup_name, idea, score, one_liner,
                     callouts, fixes, verdict_title, competitors, tam_analysis,
+                    tam_value, sam_value, som_value, gtm_strategy,
                     india_rating, global_rating, created_at
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s::jsonb, %s, %s::jsonb, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s::jsonb, %s, %s::jsonb, %s, %s, %s, %s, %s::jsonb, %s, %s, %s)
                 RETURNING *
                 """,
                 (
@@ -769,6 +787,10 @@ async def generate_roast(request: Request, current=Depends(get_current_user)):
                     roast_data["verdict_title"],
                     json.dumps(roast_data.get("competitors", [])),
                     roast_data.get("tam_analysis", ""),
+                    roast_data.get("tam_value", ""),
+                    roast_data.get("sam_value", ""),
+                    roast_data.get("som_value", ""),
+                    json.dumps(roast_data.get("gtm_strategy", [])),
                     roast_data.get("india_rating", 0),
                     roast_data.get("global_rating", 0),
                     now,
