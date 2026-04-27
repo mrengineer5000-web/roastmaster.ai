@@ -215,6 +215,34 @@ def _row_to_roast(row: dict) -> dict:
     }
 
 
+async def _backfill_premium_data(roast_id: str, startup_name: str, idea: str):
+    try:
+        roast_data = await generate_roast_ai(startup_name, idea)
+        with get_db() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    UPDATE roasts
+                    SET competitors = %s::jsonb,
+                        tam_analysis = %s,
+                        india_rating = %s,
+                        global_rating = %s
+                    WHERE id = %s
+                    """,
+                    (
+                        json.dumps(roast_data["competitors"]),
+                        roast_data["tam_analysis"],
+                        roast_data["india_rating"],
+                        roast_data["global_rating"],
+                        roast_id,
+                    ),
+                )
+        return roast_data
+    except Exception as e:
+        logger.error(f"Failed to backfill premium data for {roast_id}: {e}")
+        return None
+
+
 init_db()
 
 rzp_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
@@ -549,12 +577,22 @@ async def generate_roast_ai(startup_name: str, idea: str, file_attachments: Opti
     while len(fixes) < 5:
         fixes.append("Start over. Talk to 50 real users first.")
 
+    def safe_int(v, default=0):
+        try:
+            return int(v)
+        except (ValueError, TypeError):
+            return default
+
     return {
         "score": score,
         "verdict_title": str(data.get("verdict_title", "DELUSION DETECTED"))[:120].upper(),
         "one_liner": str(data.get("one_liner", "This idea needs a funeral, not a Series A."))[:300],
         "callouts": callouts,
         "fixes": fixes,
+        "competitors": [str(c).strip() for c in (data.get("competitors") or [])][:3],
+        "tam_analysis": str(data.get("tam_analysis", "")).strip(),
+        "india_rating": max(0, min(100, safe_int(data.get("india_rating"), 0))),
+        "global_rating": max(0, min(100, safe_int(data.get("global_rating"), 0))),
     }
 
 
@@ -748,6 +786,16 @@ async def get_roast(roast_id: str):
             roast = cur.fetchone()
     if not roast:
         raise HTTPException(status_code=404, detail="Roast not found")
+    
+    # Auto-backfill if premium but missing data
+    if roast.get("is_premium") and (not roast.get("competitors") or not roast.get("tam_analysis")):
+        await _backfill_premium_data(roast["id"], roast["startup_name"], roast["idea"])
+        # Fetch again after backfill
+        with get_db() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT * FROM roasts WHERE id = %s", (roast_id,))
+                roast = cur.fetchone()
+
     return _row_to_roast(roast)
 
 
@@ -892,7 +940,14 @@ async def verify_payment(payload: VerifyPaymentInput, current=Depends(get_curren
             )
 
             if payment.get("payment_type") == "premium_upgrade" and payment.get("roast_id"):
-                cur.execute("UPDATE roasts SET is_premium = TRUE WHERE id = %s", (payment["roast_id"],))
+                roast_id = payment["roast_id"]
+                cur.execute("UPDATE roasts SET is_premium = TRUE WHERE id = %s", (roast_id,))
+                
+                # Check if we need to backfill data immediately
+                cur.execute("SELECT idea, startup_name, competitors, tam_analysis FROM roasts WHERE id = %s", (roast_id,))
+                r = cur.fetchone()
+                if r and (not r.get("competitors") or not r.get("tam_analysis") or r.get("tam_analysis") == ""):
+                    await _backfill_premium_data(roast_id, r["startup_name"], r["idea"])
                 # Fetch user again to return consistent response
                 cur.execute("SELECT id, email, name, used_free_roast, paid_roasts_balance FROM users WHERE id = %s", (current["id"],))
                 user = cur.fetchone()
