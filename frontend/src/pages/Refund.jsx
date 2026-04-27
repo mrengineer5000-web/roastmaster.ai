@@ -10,7 +10,7 @@ export default function Refund() {
     >
       <LegalSection label="01" heading="The Product">
         <p>
-          Roastmaster charges ₹49 per roast (plus any applicable taxes). Each payment unlocks exactly one AI-generated roast, which is delivered instantly to your account.
+          Roastmaster charges ₹10 per roast (plus any applicable taxes). Each payment unlocks exactly one AI-generated roast, which is delivered instantly to your account.
         </p>
       </LegalSection>
 

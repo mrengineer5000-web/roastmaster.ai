@@ -328,7 +328,7 @@ export default function Landing() {
                       ? user.used_free_roast
                         ? user.paid_roasts_balance > 0
                           ? `You have ${user.paid_roasts_balance} paid roast(s) left`
-                          : "Next roast: ₹49"
+                          : "Next roast: ₹10"
                         : "Your first roast is free"
                       : "Sign up · First roast on the house"}
                   </p>
@@ -368,7 +368,7 @@ export default function Landing() {
             <h3 className="font-display uppercase text-4xl md:text-5xl leading-[0.95] mt-3">
               First roast <span className="text-[#FFD60A]">free.</span>
             </h3>
-            <p className="font-serif-italic text-xl mt-3 text-[#A1A1AA]">Then ₹49 per savage review.</p>
+            <p className="font-serif-italic text-xl mt-3 text-[#A1A1AA]">Then ₹10 per savage review.</p>
           </div>
           <div className="border border-[#27272A] p-8">
             <ul className="space-y-3 text-sm text-[#A1A1AA]">
@@ -379,7 +379,7 @@ export default function Landing() {
             </ul>
           </div>
           <div className="text-center md:text-right">
-            <div className="font-display text-7xl md:text-8xl text-[#FF3B30] leading-none">₹49</div>
+            <div className="font-display text-7xl md:text-8xl text-[#FF3B30] leading-none">₹10</div>
             <Link to={user ? "/" : "/signup"} data-testid="pricing-cta-link" className="btn-brutal mt-8 inline-flex">
               Get Roasted
             </Link>

@@ -74,7 +74,7 @@ export default function PaywallModal({ open, onClose, onSuccess }) {
           <div className="mt-6 border border-[#27272A] p-5">
             <p className="label-tag mb-2">One more dose of reality</p>
             <div className="flex items-end gap-2">
-              <span className="font-display text-7xl leading-none text-[#FFD60A]">₹49</span>
+              <span className="font-display text-7xl leading-none text-[#FFD60A]">₹10</span>
               <span className="text-xs uppercase tracking-[0.25em] text-[#71717A] pb-3">per roast</span>
             </div>
             <ul className="mt-5 space-y-2 text-sm text-[#A1A1AA]">
@@ -91,7 +91,7 @@ export default function PaywallModal({ open, onClose, onSuccess }) {
             className="btn-brutal btn-yellow w-full mt-6"
           >
             <Zap className="h-5 w-5" />
-            {loading ? "Opening Razorpay..." : "Pay ₹49 & Get Roasted"}
+            {loading ? "Opening Razorpay..." : "Pay ₹10 & Get Roasted"}
           </button>
           <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-[#71717A] text-center">
             Secured by Razorpay // UPI · Cards · Wallets

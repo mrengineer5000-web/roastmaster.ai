@@ -28,7 +28,7 @@ export default function Terms() {
 
       <LegalSection label="04" heading="Free Roast & Paid Usage">
         <p>
-          Every new verified account gets one (1) free roast. After the free roast is consumed, each additional roast costs ₹49 (Indian Rupees, inclusive of applicable taxes) per roast, charged via Razorpay.
+          Every new verified account gets one (1) free roast. After the free roast is consumed, each additional roast costs ₹10 (Indian Rupees, inclusive of applicable taxes) per roast, charged via Razorpay.
         </p>
         <p>
           Credits purchased are non-transferable and are applied to your account instantly upon successful payment verification.

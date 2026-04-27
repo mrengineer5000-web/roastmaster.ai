@@ -46,7 +46,8 @@ RAZORPAY_KEY_ID = os.environ["RAZORPAY_KEY_ID"]
 RAZORPAY_KEY_SECRET = os.environ["RAZORPAY_KEY_SECRET"]
 JWT_SECRET = os.environ["JWT_SECRET"]
 
-ROAST_PRICE_PAISE = 4900  # Rs 49
+ROAST_PRICE_PAISE = 1000  # Rs 10
+PREMIUM_UPGRADE_PAISE = 2900  # Rs 29
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -76,6 +77,11 @@ CREATE TABLE IF NOT EXISTS roasts (
     callouts JSONB NOT NULL,
     fixes JSONB NOT NULL,
     verdict_title TEXT NOT NULL,
+    is_premium BOOLEAN NOT NULL DEFAULT FALSE,
+    competitors JSONB,
+    tam_analysis TEXT,
+    india_rating INTEGER,
+    global_rating INTEGER,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -88,6 +94,8 @@ CREATE TABLE IF NOT EXISTS payments (
     amount INTEGER NOT NULL,
     status TEXT NOT NULL,
     payment_id TEXT,
+    payment_type TEXT NOT NULL DEFAULT 'roast_credit',
+    roast_id TEXT REFERENCES roasts(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     paid_at TIMESTAMPTZ
 );
@@ -186,6 +194,7 @@ def _row_to_user_public(row: dict) -> dict:
 
 
 def _row_to_roast(row: dict) -> dict:
+    is_premium = bool(row.get("is_premium", False))
     return {
         "id": row["id"],
         "user_id": row["user_id"],
@@ -198,6 +207,11 @@ def _row_to_roast(row: dict) -> dict:
         "fixes": list(row["fixes"] or []),
         "verdict_title": row["verdict_title"],
         "created_at": row["created_at"].astimezone(timezone.utc).isoformat(),
+        "is_premium": is_premium,
+        "competitors": list(row["competitors"] or []) if is_premium else None,
+        "tam_analysis": row["tam_analysis"] if is_premium else None,
+        "india_rating": int(row["india_rating"]) if is_premium and row.get("india_rating") is not None else None,
+        "global_rating": int(row["global_rating"]) if is_premium and row.get("global_rating") is not None else None,
     }
 
 
@@ -240,6 +254,11 @@ class RoastOut(BaseModel):
     fixes: List[str]
     verdict_title: str
     created_at: str
+    is_premium: bool = False
+    competitors: Optional[List[str]] = None
+    tam_analysis: Optional[str] = None
+    india_rating: Optional[int] = None
+    global_rating: Optional[int] = None
 
 
 class CreateOrderOut(BaseModel):
@@ -470,7 +489,15 @@ Output ONLY valid JSON in this exact schema, nothing else, no prefix, no suffix,
     "<fix 3>",
     "<fix 4>",
     "<fix 5>"
-  ]
+  ],
+  "competitors": [
+    "<name of real competitor 1>",
+    "<name of real competitor 2>",
+    "<name of real competitor 3>"
+  ],
+  "tam_analysis": "<1-2 sentences brutally explaining why their market size is either a lie or impossible to capture>",
+  "india_rating": <integer 0-100, probability of survival in the Indian market>,
+  "global_rating": <integer 0-100, probability of global scaling success>
 }
 
 Rules:
@@ -480,6 +507,8 @@ Rules:
 - Each callout should be 1-2 sentences, punchy.
 - Fixes should be specific, not 'do more research'.
 - Score strictly: most ideas deserve 2-5. Unicorns are rare.
+- Competitors MUST be real existing companies or startups.
+- Ratings should be realistic. If it's a hyper-local Indian idea, global_rating should be low.
 - Do not use emoji.
 - Return only JSON. No commentary."""
 
@@ -674,7 +703,7 @@ async def generate_roast(request: Request, current=Depends(get_current_user)):
                     (current["id"],),
                 )
             else:
-                raise HTTPException(status_code=402, detail="Free roast consumed. Pay Rs 49 for another savage review.")
+                raise HTTPException(status_code=402, detail="Free roast consumed. Pay Rs 10 for another savage review.")
 
             if not cur.fetchone():
                 raise HTTPException(status_code=402, detail="Roast credit is no longer available. Please try again.")
@@ -683,9 +712,10 @@ async def generate_roast(request: Request, current=Depends(get_current_user)):
                 """
                 INSERT INTO roasts (
                     id, user_id, user_name, startup_name, idea, score, one_liner,
-                    callouts, fixes, verdict_title, created_at
+                    callouts, fixes, verdict_title, competitors, tam_analysis,
+                    india_rating, global_rating, created_at
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s::jsonb, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s::jsonb, %s, %s::jsonb, %s, %s, %s, %s)
                 RETURNING *
                 """,
                 (
@@ -699,6 +729,10 @@ async def generate_roast(request: Request, current=Depends(get_current_user)):
                     json.dumps(roast_data["callouts"]),
                     json.dumps(roast_data["fixes"]),
                     roast_data["verdict_title"],
+                    json.dumps(roast_data.get("competitors", [])),
+                    roast_data.get("tam_analysis", ""),
+                    roast_data.get("india_rating", 0),
+                    roast_data.get("global_rating", 0),
                     now,
                 ),
             )
@@ -769,16 +803,52 @@ async def create_order(current=Depends(get_current_user)):
         with conn.cursor() as cur:
             cur.execute(
                 """
-                INSERT INTO payments (order_id, user_id, amount, status, created_at)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO payments (order_id, user_id, amount, status, payment_type, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s)
                 ON CONFLICT (order_id) DO UPDATE
                 SET user_id = EXCLUDED.user_id,
                     amount = EXCLUDED.amount,
-                    status = EXCLUDED.status
+                    status = EXCLUDED.status,
+                    payment_type = EXCLUDED.payment_type
                 """,
-                (order["id"], current["id"], ROAST_PRICE_PAISE, "created", datetime.now(timezone.utc)),
+                (order["id"], current["id"], ROAST_PRICE_PAISE, "created", "roast_credit", datetime.now(timezone.utc)),
             )
     return {"order_id": order["id"], "amount": ROAST_PRICE_PAISE, "currency": "INR", "key_id": RAZORPAY_KEY_ID}
+
+
+@api_router.post("/roast/{roast_id}/premium-order", response_model=CreateOrderOut)
+async def create_premium_order(roast_id: str, current=Depends(get_current_user)):
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT user_id, is_premium FROM roasts WHERE id = %s", (roast_id,))
+            roast = cur.fetchone()
+    if not roast:
+        raise HTTPException(status_code=404, detail="Roast not found")
+    if roast["user_id"] != current["id"]:
+        raise HTTPException(status_code=403, detail="Not your roast")
+    if roast["is_premium"]:
+        raise HTTPException(status_code=400, detail="Already premium")
+
+    receipt = f"prem_{roast_id[:8]}_{int(datetime.now(timezone.utc).timestamp())}"[:40]
+    order = rzp_client.order.create(
+        {
+            "amount": PREMIUM_UPGRADE_PAISE,
+            "currency": "INR",
+            "receipt": receipt,
+            "payment_capture": 1,
+            "notes": {"user_id": current["id"], "roast_id": roast_id, "product": "premium_upgrade"},
+        }
+    )
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO payments (order_id, user_id, roast_id, amount, status, payment_type, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """,
+                (order["id"], current["id"], roast_id, PREMIUM_UPGRADE_PAISE, "created", "premium_upgrade", datetime.now(timezone.utc)),
+            )
+    return {"order_id": order["id"], "amount": PREMIUM_UPGRADE_PAISE, "currency": "INR", "key_id": RAZORPAY_KEY_ID}
 
 
 @api_router.post("/payment/verify")
@@ -820,16 +890,23 @@ async def verify_payment(payload: VerifyPaymentInput, current=Depends(get_curren
                 """,
                 ("paid", payload.razorpay_payment_id, datetime.now(timezone.utc), payload.razorpay_order_id),
             )
-            cur.execute(
-                """
-                UPDATE users
-                SET paid_roasts_balance = paid_roasts_balance + 1
-                WHERE id = %s
-                RETURNING id, email, name, used_free_roast, paid_roasts_balance
-                """,
-                (current["id"],),
-            )
-            user = cur.fetchone()
+
+            if payment.get("payment_type") == "premium_upgrade" and payment.get("roast_id"):
+                cur.execute("UPDATE roasts SET is_premium = TRUE WHERE id = %s", (payment["roast_id"],))
+                # Fetch user again to return consistent response
+                cur.execute("SELECT id, email, name, used_free_roast, paid_roasts_balance FROM users WHERE id = %s", (current["id"],))
+                user = cur.fetchone()
+            else:
+                cur.execute(
+                    """
+                    UPDATE users
+                    SET paid_roasts_balance = paid_roasts_balance + 1
+                    WHERE id = %s
+                    RETURNING id, email, name, used_free_roast, paid_roasts_balance
+                    """,
+                    (current["id"],),
+                )
+                user = cur.fetchone()
     return {"status": "success", "user": _row_to_user_public(user)}
 
 
