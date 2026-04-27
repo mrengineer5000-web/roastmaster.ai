@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /roast/*
+Disallow: /forgot-password
+
+Sitemap: https://roastmaster.ai/sitemap.xml
